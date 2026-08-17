@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张建鹏 · 看见故事的反面，见证世界的宏大</title>
+<style>
+/* ============ 设计令牌 ============ */
+:root {
+  --bg: #FAF7F2;
+  --ink: #1F1B16;
+  --ink-soft: #5F5648;
+  --ink-faint: #8A7F6F;
+  --line: #E7E0D5;
+  --accent: #C4704F;
+  --accent-deep: #A85A3C;
+  --gold: #A68A64;
+  --card: #FFFFFF;
+  --radius: 16px;
+  --shadow-sm: 0 2px 8px rgba(31,27,22,0.05);
+  --shadow-md: 0 6px 20px rgba(31,27,22,0.08);
+  --shadow-lg: 0 12px 32px rgba(31,27,22,0.12);
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --serif: "Songti SC", "SimSun", serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============ 首屏 ============ */
+.hero {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 80px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(196,112,79,0.06), transparent 70%),
+    var(--bg);
+}
+.hero h1 {
+  font-size: clamp(36px, 6.5vw, 60px);
+  font-weight: 200;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+.hero h1 .warm { color: var(--accent); font-weight: 300; }
+.hero .sub {
+  margin-top: 20px;
+  font-size: 16px;
+  color: var(--ink-soft);
+  letter-spacing: 0.03em;
+}
+.hero .tags {
+  margin-top: 34px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero .tag {
+  padding: 7px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.hero .tag:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+
+/* ============ 立体导航（5个形状） ============ */
+.shape-nav {
+  max-width: 1080px;
+  margin: -40px auto 0;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.shape {
+  position: relative;
+  background: linear-gradient(145deg, #FFFFFF, #F2EDE4);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 18px 22px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 4px rgba(31,27,22,0.04),
+    0 8px 16px rgba(31,27,22,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1.1), box-shadow 0.3s;
+}
+.shape:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:
+    0 4px 8px rgba(31,27,22,0.06),
+    0 20px 40px rgba(31,27,22,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.shape:active { transform: translateY(-2px) scale(0.99); }
+.shape .shape-num {
+  position: absolute;
+  top: 12px; left: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+.shape .shape-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+.shape h3 {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.shape p {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ============ 内容区 ============ */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 24px 100px;
+}
+.story-section { scroll-margin-top: 24px; }
+.story-head { margin-bottom: 40px; }
+.story-head .kicker {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+.story-head h2 {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.story-head .desc {
+  color: var(--ink-soft);
+  font-size: 15px;
+  max-width: 640px;
+  margin-top: 12px;
+}
+
+/* 卡片 */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+  border: 1px solid rgba(231,224,213,0.6);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.card .kicker {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.card h3 { font-size: 18px; font-weight: 500; margin-bottom: 10px; }
+.card p { color: var(--ink-soft); font-size: 14px; }
+.card .meta {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) {
+  .shape-nav { grid-template-columns: repeat(3, 1fr); }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .shape-nav { grid-template-columns: 1fr 1fr; }
+}
+
+/* 时间线 */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 4px; bottom: 4px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--gold));
+  opacity: 0.35;
+  border-radius: 2px;
+}
+.tl-item { position: relative; margin-bottom: 30px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -29px; top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(196,112,79,0.15);
+}
+.tl-item .tl-date {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.tl-item h4 { font-size: 16px; font-weight: 500; margin: 4px 0 6px; }
+.tl-item p { color: var(--ink-soft); font-size: 14px; }
+
+/* 流水线 */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; margin: 28px 0; }
+.flow-step {
+  flex: 1;
+  min-width: 140px;
+  background: linear-gradient(160deg, #FFFFFF, #F6F1E8);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.flow-step:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.flow-step .num {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.flow-step .label { font-size: 14px; font-weight: 500; margin-top: 5px; }
+.flow-step .detail { font-size: 12px; color: var(--ink-faint); margin-top: 5px; line-height: 1.55; }
+.flow-arrow { display: flex; align-items: center; padding: 0 4px; color: var(--gold); font-size: 18px; }
+
+/* 为什么 */
+.why {
+  margin-top: 48px;
+  padding: 30px 32px;
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(90deg, rgba(196,112,79,0.07), transparent 80%);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.why .why-label {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.why p {
+  font-size: 15.5px;
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 2;
+}
+
+/* 项目卡片 */
+.project-card { display: flex; flex-direction: column; }
+.project-card .status {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.status-live { background: rgba(166,138,100,0.14); color: var(--gold); }
+.status-local { background: rgba(196,112,79,0.1); color: var(--accent-deep); }
+.project-card .tech {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+}
+
+/* 洞察 */
+.insight { margin-bottom: 20px; }
+.insight .pattern {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.insight p { color: var(--ink-soft); font-size: 14px; }
+
+/* 页脚 */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 44px 24px 56px;
+  text-align: center;
+}
+footer .contact {
+  font-size: 13px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+
+/* 滚动回顶部 */
+.to-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+}
+.to-top.show { opacity: 0.9; }
+.to-top:hover { transform: translateY(-3px); opacity: 1; }
+</style>
+</head>
+<body>
+<!-- ============ 首屏 ============ -->
+<section class="hero">
+  <h1>看见故事的反面<br><span class="warm">见证世界的宏大</span></h1>
+  <p class="sub">张建鹏 · 游戏文案策划 · 汉语言文学 · 2027届 · 武汉</p>
+  <div class="tags">
+    <span class="tag">世界观构建</span>
+    <span class="tag">长篇叙事</span>
+    <span class="tag">《诡秘之主》四刷</span>
+    <span class="tag">历史考据</span>
+    <span class="tag">AI创作</span>
+  </div>
+</section>
+
+<!-- ============ 立体导航 ============ -->
+<nav class="shape-nav">
+  <div class="shape" data-target="story1">
+    <span class="shape-num">01</span>
+    <span class="shape-icon">🎲</span>
+    <h3>命运途径设计</h3>
+    <p>《诡秘之主》幸运儿途径游戏化</p>
+  </div>
+  <div class="shape" data-target="story2">
+    <span class="shape-num">02</span>
+    <span class="shape-icon">📖</span>
+    <h3>小说认知</h3>
+    <p>为什么"因为真实，所以共情"</p>
+  </div>
+  <div class="shape" data-target="story3">
+    <span class="shape-num">03</span>
+    <span class="shape-icon">📜</span>
+    <h3>72集长篇叙事</h3>
+    <p>从史料到成品的完整创作</p>
+  </div>
+  <div class="shape" data-target="story4">
+    <span class="shape-num">04</span>
+    <span class="shape-icon">🛠️</span>
+    <h3>AI创作体系</h3>
+    <p>用AI放大内容产能</p>
+  </div>
+  <div class="shape" data-target="story5">
+    <span class="shape-num">05</span>
+    <span class="shape-icon">🎮</span>
+    <h3>游戏与经历</h3>
+    <p>10年玩家 · 多段实践</p>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ 故事1：命运途径设计 ============ -->
+<section class="story-section" id="story1">
+  <div class="story-head">
+    <div class="kicker">CORE WORK · 核心作品</div>
+    <h2>《诡秘之主》命运途径游戏化设计</h2>
+    <p class="desc">基于"大事不虚、小事不拘"原则，为命运途径设计一个初步的游戏化方案——9个序列的技能体系、幸运值核心机制、神奇物品与扮演法设计。我认为这条途径开发出来是最有价值的：赌徒心理是每个人都或多或少存在的。</p>
+  </div>
+
+  <a class="card" href="fate-pathway/" style="display:block;text-decoration:none;color:inherit;margin-bottom:20px;">
+    <div class="kicker">点击查看完整设计 →</div>
+    <h3>命运途径 · 序列9 → 序列1</h3>
+    <p>怪物（感知预警）→ 机器（精准打击）→ 幸运儿（概率生存）→ 灾祸教士（群体干扰）→ 赢家（命运操控）→ 厄运法师（领域控制）→ 混乱行者（规则打乱）→ 先知（远程祝福）→ 巨蛇（时间循环）</p>
+    <div class="meta">核心机制：幸运值系统 · 承担厄运换幸运 · 神奇物品选择权 · 扮演法联动</div>
+  </a>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="kicker">设计理念</div>
+      <h3>把"最弱途径"做成"最刺激职业"</h3>
+      <p>命运途径原著公认综合能力最弱。游戏化核心命题：如何让最弱的途径成为玩家抢着选的职业？答案：不确定性本身就是乐趣——平时攒人品，关键时刻梭哈。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">核心机制</div>
+      <h3>幸运值系统</h3>
+      <p>屏幕右侧竖条：金色幸运值/红色厄运值。节制积累、乱用反噬、助人获取——"好运厄运等价，获得必须先付出"的完整游戏化。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">改编逻辑</div>
+      <h3>遵循游戏组模式</h3>
+      <p>每个序列3-6个具体技能、允许超前嫁接（序列9即可见命运轨迹线）、每个序列明确战斗定位——与官方对占卜家途径的改编逻辑一致。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>《诡秘之主》原著精读4遍、《宿命之环》完读。设计这份方案，是因为热爱——我想把对这本书的理解，变成看得见摸得着的东西。</p>
+  </div>
+</section>
+
+<!-- ============ 故事2：小说认知 ============ -->
+<section class="story-section" id="story2">
+  <div class="story-head">
+    <div class="kicker">STORY 02</div>
+    <h2>对《诡秘之主》的认知：看见故事的反面</h2>
+    <p class="desc">我热爱这本书，更爱它的故事设定。我喜欢每一个有温度的人，为每一个人的遗憾而去遗憾，去体验宏大历史背景下普通人的无奈，去见证一个个活过的人。</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="kicker">共情的来源</div>
+      <h3>打动我们的，不是神的伟大，是人的可爱</h3>
+      <p>克莱恩不是天选之人，是一个想回家的普通人——因为想回家，所以要活下去。他善良、谨慎、温柔，时刻恐惧神性盖过人性，在"人"与"神"之间挣扎。真正让人心疼的，不是他多强，是他多像我们：离家的人，想回去。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">人物塑造</div>
+      <h3>每个人都在走向自己的反面</h3>
+      <p>上位者卑微到尘埃，高傲者求而不得，纵欲的魔女死于爱情，阴谋家死于忠诚，旅者死于归乡，死神困于冥河，牧羊人死于信仰，黄昏巨人倒在黎明之前。每个反转都有对应的角色，都在情理之中——这是我最想学会的写法。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">世界观</div>
+      <h3>一个底层逻辑自洽的世界才可信</h3>
+      <p>22条途径、完整的货币体系、清晰的历史纪元、参考真实欧洲历史的地理经济数据——诡秘的非凡世界底下，是经得起推敲的真实肌理。虚拟世界的魅力，恰恰来自它的"真实感"。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">社会隐喻</div>
+      <h3>说的是非凡故事，讲的是时代矛盾</h3>
+      <p>贝克兰德的大雾霾、底层民众的贫困、垄断资本的野心、利用民族主义转移矛盾——诡秘把维多利亚时代的真实矛盾织进了故事里。这让它超越了"爽文"，成为有重量的作品。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>我就是热爱这本书——喜欢每一个有温度的人，为每一个人的遗憾而去遗憾，去体验宏大历史背景下普通人的无奈，去见证一个个活过的人。</p>
+  </div>
+</section>
+
+<section class="story-section" id="story3">
+  <div class="story-head">
+    <div class="kicker">STORY 03</div>
+    <h2>从史料到成品：72集长篇叙事</h2>
+    <p class="desc">一次完整的创作旅程——从练手到发现短板，从史料补课到迭代重构，最终形成一部历史考据扎实的72集长篇叙事作品。</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step"><div class="num">01</div><div class="label">练手</div><div class="detail">小故事打磨叙事基本功</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">02</div><div class="label">发现短板</div><div class="detail">史实/逻辑/伏笔的系统性缺口</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">03</div><div class="label">史料补课</div><div class="detail">专著+40余篇学术论文</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">04</div><div class="label">迭代重构</div><div class="detail">删反派/立线索/补人物</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">05</div><div class="label">差异化</div><div class="detail">迁移红25军背景</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">06</div><div class="label">成品</div><div class="detail">72集三幕完整结构</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:36px;">
+    <a class="card" href="script/" style="text-decoration:none;color:inherit;display:block;">
+      <div class="kicker">查看剧本 · 点击进入 →</div>
+      <h3>《背着生命走长征》· 72集长篇叙事</h3>
+      <p>世界观构建（史料考据）、人物体系（72集完整弧光）、叙事结构（三幕+扁担意象+伏笔体系）、市场验证（三类人群测试）</p>
+      <div class="meta">世界观构建 · 人物弧光 · 伏笔悬念 · 镜头语言（△视觉化脚本）</div>
+    </a>
+    <div class="card">
+      <div class="kicker">与游戏文案的关联</div>
+      <h3>长篇叙事的核心能力</h3>
+      <p>世界观构建（对应游戏设定）、人物体系（对应角色设计）、伏笔悬念（对应剧情线索）、镜头语言（对应任务表演）——72集长篇证明的，正是游戏文案需要的能力。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>好的内容不止是灵感产物，也是方法论的产物——但灵感永远是起点。史料研究、结构设计、市场验证让灵感落地成作品，而灵感的火花本身，来自对生活的敏感和对人的共情。</p>
+  </div>
+</section>
+
+<!-- ============ 故事4：AI创作体系 ============ -->
+<section class="story-section" id="story4">
+  <div class="story-head">
+    <div class="kicker">STORY 04</div>
+    <h2>用AI放大内容产能</h2>
+    <p class="desc">不是"用AI偷懒"，是"用AI放大"——让灵感落地的速度和规模倍增，同时质量可控。</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <div class="kicker">Prompt体系</div>
+      <h3>30+条创作模板 + Agent手册</h3>
+      <p>覆盖剧本创作/数据分析/用户研究/文档处理，定义AI角色边界与双模式切换，让AI辅助创作效率与质量双提升。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">质量评估</div>
+      <h3>五维内容质量评估体系</h3>
+      <p>内核25%/结构25%/人物20%/历史15%/视听15%+合规一票否决——对AI输出进行测试、评估与持续优化。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">落地实践</div>
+      <h3>Hermes AI助手</h3>
+      <p>针对"灵感多但缺人讨论"的真实需求，搭建个人AI助手：记忆系统+人格配置+定时推送，2G内存服务器稳定运行。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>我喜欢AI把想法快速落地的感觉——那种及时反馈感非常强大。把工具用透、把方法沉淀，让更多人能用上这份效率，是我对热爱的回应。</p>
+  </div>
+</section>
+
+<!-- ============ 故事5：游戏与经历 ============ -->
+<section class="story-section" id="story5">
+  <div class="story-head">
+    <div class="kicker">STORY 05</div>
+    <h2>10年玩家 · 多段实践</h2>
+    <p class="desc">从游戏玩家到内容创作者，每一段经历都在塑造我对"叙事"的理解。</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="kicker">游戏经历</div>
+      <h3>多品类深度体验</h3>
+      <p>《诡秘之主》原著精读4遍+《宿命之环》完读；我的世界（10年）、原神（60级）、燕云十六声、崩坏星穹铁道、王者荣耀、Steam多款3A——理解不同游戏类型的叙事结构与玩家体验。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">实习经历</div>
+      <h3>晟智创育 · 内容创作</h3>
+      <p>72集长篇叙事主笔，获公司认可作为核心项目推进；AI创作体系让效率与质量双提升。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">实习经历</div>
+      <h3>淘师湾 · 内容方案</h3>
+      <p>6城20+项目包培训方案，已中标2个；曾于利川市税务局实习，熟悉政府红线思维与合规要求。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">校园经历</div>
+      <h3>学工在线 · 采编部部长</h3>
+      <p>原创图文30+篇，单篇最高阅读量2.3万+，多文风创作（诗意爆款体/深度报道体）。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这些</div>
+    <p>回顾这些经历，我总在热爱我的团队，希望大家都变得更好——把没人要求做的事做完、做好、沉淀成方法。敢于承担每一份责任，是我积累能力的方式，也是我对生活的态度。</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="contact">张建鹏 · 156-2388-0798 · 230016968@qq.com · 中南民族大学 汉语言文学 2027届</div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+// 立体导航点击跳转
+document.querySelectorAll('.shape').forEach(shape => {
+  shape.addEventListener('click', () => {
+    const target = document.getElementById(shape.dataset.target);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// 回到顶部按钮
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.classList.toggle('show', window.scrollY > 400);
+});
+toTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
