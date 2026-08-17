@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>用户画像分析 · 四国留学生 | 张建鹏作品集</title>
+<style>
+:root {
+  --bg: #FAF7F2; --ink: #1F1B16; --ink-soft: #5F5648; --ink-faint: #8A7F6F;
+  --line: #E7E0D5; --accent: #C4704F; --gold: #A68A64; --card: #FFFFFF;
+  --radius: 16px;
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.75; font-size:15px; -webkit-font-smoothing:antialiased; }
+.back { display:inline-block; margin:28px 24px 0; padding:8px 18px; border:1px solid var(--line); border-radius:999px; color:var(--ink-soft); text-decoration:none; font-size:13px; transition:all .2s; }
+.back:hover { border-color:var(--accent); color:var(--accent); }
+.wrap { max-width:960px; margin:0 auto; padding:36px 24px 80px; }
+h1 { font-size:34px; font-weight:300; letter-spacing:.04em; }
+.sub { color:var(--ink-soft); margin-top:10px; font-size:15px; max-width:660px; }
+.badges { margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
+.badge { padding:5px 14px; border-radius:999px; background:rgba(196,112,79,.1); color:var(--accent); font-size:12px; }
+.badge.gold { background:rgba(166,138,100,.14); color:var(--gold); }
+.cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+@media (max-width:700px){ .cards{grid-template-columns:1fr;} }
+.card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.card h3 { font-size:16px; font-weight:500; margin-bottom:8px; }
+.card p { font-size:13.5px; color:var(--ink-soft); }
+.card .tag { display:inline-block; margin-top:10px; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+.section { margin-top:44px; }
+.section h2 { font-size:20px; font-weight:500; margin-bottom:6px; }
+.section .note { font-size:13px; color:var(--ink-faint); margin-bottom:16px; }
+.gallery { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+@media (max-width:700px){ .gallery{grid-template-columns:1fr;} }
+.imgbox { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:12px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.imgbox img { width:100%; border-radius:8px; display:block; }
+.imgbox .cap { font-size:12px; color:var(--ink-faint); margin-top:8px; text-align:center; }
+.method { background:linear-gradient(90deg, rgba(196,112,79,.07), transparent 80%); border-left:3px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:24px 28px; margin-top:40px; }
+.method .label { font-size:12px; color:var(--accent); font-weight:600; letter-spacing:.1em; margin-bottom:8px; }
+.method p { font-size:14.5px; color:var(--ink); }
+</style>
+</head>
+<body>
+<a class="back" href="./">← 返回作品集</a>
+<div class="wrap">
+  <h1>来华留学生用户画像分析</h1>
+  <p class="sub">基于 Google Trends / Yandex Wordstat 多数据源，完成俄罗斯、泰国、马来西亚、孟加拉四国来华留学生用户画像分析——从搜索关键词里挖掘内容偏好，输出数据驱动的内容运营策略。</p>
+  <div class="badges">
+    <span class="badge">4国用户画像</span>
+    <span class="badge">200+关键词标注</span>
+    <span class="badge gold">16张可视化图表</span>
+    <span class="badge gold">结论被国际部采纳</span>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <span class="tag">方法论</span>
+      <h3>四维搜索意图分类</h3>
+      <p>内容消费 / 信息获取 / 决策辅助 / 语言学习——关键词不是词，是用户意图的信号。搜"中国电视剧"的人在想被娱乐，搜"怎么申请大学"的人在决策路径上。</p>
+    </div>
+    <div class="card">
+      <span class="tag">数据敏感</span>
+      <h3>异常值警觉</h3>
+      <p>分析孟加拉数据时发现性别"其他"占比20.5%异常——追问后发现是小样本（83）导致的统计偏差。对异常值的警觉避免了一次错误结论。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>数据可视化图表</h2>
+    <p class="note">用 Python（matplotlib）生成 16 张图表：意图分布、5年趋势、竞品对比、关键词热度等。</p>
+    <div class="gallery" id="charts"></div>
+  </div>
+
+  <div class="method">
+    <div class="label">我的方法</div>
+    <p>深受马克思主义和毛泽东思想影响，坚持"没有调查就没有发言权"——先有数据再说话，先问为什么再下结论。这套方法沉淀为可复用的Prompt模板库（5套）与Python分析脚本。</p>
+  </div>
+</div>
+
+<script>
+// 从报告图表目录加载16张图
+const chartNames = [
+  'c1_csr', 'c2_gender', 'c3_female', 'c4_national_vs_csr',
+  'c5_gt_studyinchina', 'c6_drama', 'c7_yandex', 'c8_bd_scholarship',
+  'c9_validation', 'c10_drama_bar',
+  'chart1_csr_users', 'chart2_gender_stack', 'chart3_female_ratio',
+  'chart4_pie_thai_malaysia', 'chart5_national_vs_csr', 'chart6_content_recommend'
+];
+const gallery = document.getElementById('charts');
+chartNames.forEach(name => {
+  const box = document.createElement('div');
+  box.className = 'imgbox';
+  box.innerHTML = `<img src="charts/${name}.png" alt="${name}" loading="lazy"><div class="cap">${name}</div>`;
+  gallery.appendChild(box);
+});
+</script>
+</body>
+</html>
