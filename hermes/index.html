@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes · 个人AI助手 | 张建鹏作品集</title>
+<style>
+:root {
+  --bg: #FAF7F2; --ink: #1F1B16; --ink-soft: #5F5648; --ink-faint: #8A7F6F;
+  --line: #E7E0D5; --accent: #C4704F; --gold: #A68A64; --card: #FFFFFF;
+  --radius: 16px;
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.75; font-size:15px; -webkit-font-smoothing:antialiased; }
+.back { display:inline-block; margin:28px 24px 0; padding:8px 18px; border:1px solid var(--line); border-radius:999px; color:var(--ink-soft); text-decoration:none; font-size:13px; transition:all .2s; }
+.back:hover { border-color:var(--accent); color:var(--accent); }
+.wrap { max-width:960px; margin:0 auto; padding:36px 24px 80px; }
+h1 { font-size:34px; font-weight:300; letter-spacing:.04em; }
+.sub { color:var(--ink-soft); margin-top:10px; font-size:15px; max-width:640px; }
+.badge { display:inline-block; margin-top:18px; padding:5px 14px; border-radius:999px; background:rgba(166,138,100,.14); color:var(--gold); font-size:12px; letter-spacing:.03em; }
+.imgbox { margin-top:28px; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:16px; box-shadow:0 4px 16px rgba(31,27,22,.06); }
+.imgbox img { width:100%; border-radius:10px; display:block; }
+.cap { font-size:12px; color:var(--ink-faint); margin-top:10px; text-align:center; }
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:32px; }
+@media (max-width:700px){ .grid{grid-template-columns:1fr;} }
+.item { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:22px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.item h3 { font-size:16px; font-weight:500; margin-bottom:8px; }
+.item p { font-size:13.5px; color:var(--ink-soft); }
+.item .tag { display:inline-block; margin-top:10px; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<a class="back" href="./">← 返回作品集</a>
+<div class="wrap">
+  <h1>Hermes · 个人AI助手</h1>
+  <p class="sub">日常灵感很多，但总缺一个"了解我的人"来讨论——于是我设定人格与记忆系统，搭建个人AI助手，用它整理灵感、沉淀工作日志，让每次对话都基于完整的"我"。</p>
+  <span class="badge">线上运行中 · 阿里云ECS · 企业微信接入</span>
+
+  <div class="imgbox">
+    <img src="Hermes.jpg" alt="Hermes 界面截图">
+    <div class="cap">Hermes 运行界面</div>
+  </div>
+
+  <div class="grid">
+    <div class="item">
+      <span class="tag">架构设计</span>
+      <h3>四件套架构</h3>
+      <p>配模型（DeepSeek API）+ 记忆系统（MEMORY/USER）+ 定时推送（cron）+ Prompt微调（人格配置）。2G内存服务器跑通完整AI助手。</p>
+    </div>
+    <div class="item">
+      <span class="tag">核心洞察</span>
+      <h3>"AI一直编"的根因</h3>
+      <p>裸模型无记忆无角色，不是模型笨——解决：记忆系统 + Prompt工程。每次对话前自动检索注入上下文（RAG最简实现）。</p>
+    </div>
+    <div class="item">
+      <span class="tag">人格系统</span>
+      <h3>朋友 + 心理咨询师</h3>
+      <p>每晚19点定时推送，7-10点随机发送，先关心后入正题，稳温柔语气——让AI有温度不是一句口号，是配置出来的。</p>
+    </div>
+    <div class="item">
+      <span class="tag">资源约束</span>
+      <h3>2G内存的减法哲学</h3>
+      <p>nginx反向代理 + Docker资源限制 + SQLite替代MySQL，多服务共存。资源约束不是限制，是帮你聚焦的信号。</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
