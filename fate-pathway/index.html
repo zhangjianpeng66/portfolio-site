@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>命运途径游戏化设计 · 张建鹏作品集</title>
+<style>
+:root {
+  --bg: #FAF7F2; --ink: #1F1B16; --ink-soft: #5F5648; --ink-faint: #8A7F6F;
+  --line: #E7E0D5; --accent: #C4704F; --gold: #A68A64; --card: #FFFFFF;
+  --radius: 16px;
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --serif: "Songti SC", "SimSun", serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.8; font-size:15px; -webkit-font-smoothing:antialiased; }
+.back { display:inline-block; margin:28px 24px 0; padding:8px 18px; border:1px solid var(--line); border-radius:999px; color:var(--ink-soft); text-decoration:none; font-size:13px; transition:all .2s; }
+.back:hover { border-color:var(--accent); color:var(--accent); }
+.wrap { max-width:960px; margin:0 auto; padding:36px 24px 80px; }
+h1 { font-size:34px; font-weight:300; letter-spacing:.04em; }
+.sub { color:var(--ink-soft); margin-top:10px; font-size:15px; max-width:680px; }
+.badges { margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; }
+.badge { padding:5px 14px; border-radius:999px; background:rgba(196,112,79,.1); color:var(--accent); font-size:12px; }
+.badge.gold { background:rgba(166,138,100,.14); color:var(--gold); }
+.section { margin-top:48px; }
+.section h2 { font-size:22px; font-weight:500; margin-bottom:8px; letter-spacing:.02em; }
+.section .note { font-size:13px; color:var(--ink-faint); margin-bottom:16px; }
+.card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px 28px; box-shadow:0 2px 8px rgba(31,27,22,.05); margin-bottom:16px; }
+.card h3 { font-size:17px; font-weight:500; margin-bottom:8px; }
+.card p { color:var(--ink-soft); font-size:14px; }
+.card .tag { display:inline-block; margin-top:10px; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+table { width:100%; border-collapse:collapse; background:var(--card); border-radius:var(--radius); overflow:hidden; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+th,td { padding:12px 16px; text-align:left; font-size:13.5px; border-bottom:1px solid var(--line); }
+th { background:#F6F1E8; font-weight:600; color:var(--ink); }
+td { color:var(--ink-soft); }
+tr:last-child td { border-bottom:none; }
+.skill-table th:first-child { width:22%; }
+.skill-table td:first-child { font-weight:600; color:var(--ink); }
+.skill-table td:nth-child(2) { width:12%; color:var(--accent); font-weight:600; }
+.seq { border-left:4px solid var(--accent); padding:20px 24px; background:var(--card); border-radius:0 var(--radius) var(--radius) 0; margin-bottom:16px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.seq .seq-head { display:flex; align-items:baseline; gap:12px; margin-bottom:6px; }
+.seq .seq-name { font-size:19px; font-weight:600; }
+.seq .seq-num { font-size:13px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+.seq .seq-role { font-size:13px; color:var(--gold); font-weight:600; }
+.seq p { font-size:13.5px; color:var(--ink-soft); }
+.seq .play { margin-top:8px; font-size:12.5px; color:var(--ink-faint); }
+.quote { font-family:var(--serif); font-size:16px; color:var(--ink); border-left:3px solid var(--gold); padding:20px 24px; background:rgba(166,138,100,.06); border-radius:0 var(--radius) var(--radius) 0; margin-top:32px; line-height:2; }
+.method { background:linear-gradient(90deg, rgba(196,112,79,.07), transparent 80%); border-left:3px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:24px 28px; margin-top:40px; }
+.method .label { font-size:12px; color:var(--accent); font-weight:600; letter-spacing:.1em; margin-bottom:8px; }
+.method p { font-size:14.5px; color:var(--ink); }
+</style>
+</head>
+<body>
+<a class="back" href="./">← 返回作品集</a>
+<div class="wrap">
+  <h1>命运途径游戏化设计</h1>
+  <p class="sub">《诡秘之主》幸运儿途径 · 序列9 → 序列1。遵循"大事不虚、小事不拘"原则——序列名、能力本质忠于原著设定，技能机制与数值为游戏体验服务。</p>
+  <div class="badges">
+    <span class="badge">9个序列</span>
+    <span class="badge">幸运值核心机制</span>
+    <span class="badge gold">原著骨架 · 游戏血肉</span>
+  </div>
+
+  <div class="section">
+    <h2>设计理念：把"最弱途径"做成"最刺激的职业"</h2>
+    <p class="note">命运途径在原著中被评价为"标准神棍，没什么攻击和防御能力"——22条途径中综合能力最弱。</p>
+    <div class="card">
+      <h3>游戏化的核心命题</h3>
+      <p>如何让一个"最弱"的途径，成为玩家抢着选的职业？答案：<strong>不确定性本身就是乐趣</strong>。其他职业的强弱是确定的（打多少伤害就是多少）；命运途径的强弱是戏剧性的（平时攒人品，关键时刻梭哈，欧皇时刻一穿三，非酋时刻被小怪反杀）。</p>
+      <span class="tag">概率操控型生存/辅助职业 · 高风险高回报 · 戏剧性逆转是核心爽点</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>幸运值系统（核心机制）</h2>
+    <p class="note">屏幕右侧竖条进度条（所有序列可见，序列9即可查看）：金色向上=幸运值，红色向下=厄运值，中间平衡点。</p>
+    <div class="card">
+      <h3>幸运值获取</h3>
+      <table>
+        <tr><th>方式</th><th>数值</th><th>说明</th></tr>
+        <tr><td>节制</td><td>+1</td><td>连续30秒不使用主动技能（"节制"的奖励）</td></tr>
+        <tr><td>助人</td><td>+2</td><td>主动为队友挡下灾祸/伤害（"先付出"的原著理念）</td></tr>
+        <tr><td>扮演</td><td>+1</td><td>完成序列扮演行为</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>幸运值消耗</h3>
+      <table>
+        <tr><th>技能</th><th>消耗</th><th>效果</th></tr>
+        <tr><td>赌徒直觉</td><td>中</td><td>赌一次"必定成功"或"必定失败"</td></tr>
+        <tr><td>幸运爆发</td><td>高</td><td>欧皇时刻：闪避/暴击/命中全部拉满</td></tr>
+        <tr><td>命运逆转</td><td>极高</td><td>团队濒灭时，一次戏剧性翻盘</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>厄运值 + 承担厄运</h3>
+      <p>乱用技能/强行触发概率/违背扮演法则 → 厄运值积累，满则"灾祸降临"反噬。<strong>序列5（赢家）解锁"承担厄运换幸运"</strong>：主动接受随机debuff换大量幸运值——"我主动倒霉，是为了攒一波大的。"</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>神奇物品机制</h2>
+    <div class="card">
+      <h3>可以佩戴，但节制更快</h3>
+      <p>可以佩戴神奇物品，效果正常生效；但每佩戴1件，幸运值积累速度-10%。不佩戴则积累加速——<strong>把原著的"命运要求"从约束变成选择</strong>：不是被迫节制，是"我选择节制，因为我知道它能换来什么"。</p>
+      <p style="margin-top:10px;">序列5解锁"天命者"被动：不佩戴任何神奇物品时，幸运值上限+30%、幸运爆发持续时间+50%。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>九序列技能设计</h2>
+    <p class="note">每个序列3-6个具体技能，遵循游戏组对占卜家途径的改编逻辑：忠于原著+数值游戏化+允许超前嫁接核心能力。</p>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列9</span><span class="seq-name">怪物</span><span class="seq-role">感知预警 · 命运入门</span></div>
+      <p><strong>命运轨迹线</strong>（被动·超前嫁接）：看到自己与敌人的命运线——金线=将走运，红线=将倒霉。<strong>危险预感</strong>（被动）：提前3秒预警致命攻击。<strong>灵性视觉</strong>（主动）：看到隐藏的灵体/陷阱。<strong>耳边低语</strong>（被动）：靠近危险时幻听提示。</p>
+      <p class="play">扮演法：克制灵性——少看少听，避免失控。超前嫁接说明：让玩家第一级就体验到"看到命运"的核心概念，与官方"占卜家序列9即获灵体之线"逻辑一致。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列8</span><span class="seq-name">机器</span><span class="seq-role">精准打击 · 战斗入门</span></div>
+      <p><strong>弹道预判</strong>（被动）：命中率提升，弹道可见。<strong>精确打击</strong>（主动）：标记弱点，下一击必定命中要害。<strong>占卜</strong>（主动）：探测目标信息/危险等级。<strong>反占卜</strong>（被动）：被探测时获得警告。</p>
+      <p class="play">扮演法：精确计算——每个动作都经过思考，杜绝冲动。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列7</span><span class="seq-name">幸运儿</span><span class="seq-role">概率生存 · 核心职业成型</span></div>
+      <p><strong>幸运眷顾</strong>（被动）：概率触发闪避致命一击/伤害减免/暴击翻倍。<strong>好运积累</strong>（被动）：节制行为持续积累幸运值。<strong>赌徒直觉</strong>（主动）：消耗幸运值赌一次"必定成功/必定失败"。<strong>厄运预感</strong>（被动）：即将被针对时获得提示。</p>
+      <p class="play">扮演法：节制幸运——忍住不用技能，积累幸运（本途径独特扮演）。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列6</span><span class="seq-name">灾祸教士</span><span class="seq-role">群体干扰 · 从被动到主动</span></div>
+      <p><strong>灾祸预感</strong>（被动）：预见即将到来的灾祸。<strong>引祸上身</strong>（主动）：给敌人上"灾祸"状态——攻击失误/被环境伤害。<strong>精神风暴</strong>（主动）：眩晕目标/心智迷失。<strong>占卜强化</strong>（被动）：占卜反占卜增强。</p>
+      <p class="play">扮演法：直面灾祸——不逃避，主动寻找化解之法。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列5</span><span class="seq-name">赢家</span><span class="seq-role">命运操控 · 职业质变</span></div>
+      <p><strong>命运操控</strong>（主动）：所有概率向有利方向偏移。<strong>厄运诅咒</strong>（主动）：给敌人上强力厄运。<strong>承担厄运</strong>（主动·解锁）：接受随机debuff换大量幸运值。<strong>天命者</strong>（被动·解锁）：不佩戴神奇物品时幸运上限+30%。<strong>戏剧性逆转</strong>（大招）：绝境时必死局面戏剧性化解。</p>
+      <p class="play">扮演法：承受厄运——主动让自己倒霉（晋升仪式：持续一个月倒霉不能有一次幸运）。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列4</span><span class="seq-name">厄运法师</span><span class="seq-role">领域控制 · 半神</span></div>
+      <p><strong>厄运领域</strong>（主动）：范围内自然染上厄运。<strong>赐福</strong>（主动）：给队友幸运祝福。<strong>厄运诅咒质变</strong>（主动）：范围扩大/时间延长。<strong>精神风暴质变</strong>（主动）：引起精神混乱与疯狂。<strong>水银之躯</strong>（被动）：免疫物理伤害（代价：速度降低）。<strong>绝对灵感</strong>（被动）：命运轨迹线完全清晰。</p>
+      <p class="play">扮演法：维护平衡——赐福与诅咒必须等价，不能只取一端。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列3</span><span class="seq-name">混乱行者</span><span class="seq-role">规则打乱 · 战术破坏者</span></div>
+      <p><strong>命运混乱</strong>（主动）：打乱目标既定命运（技能/战术/位置错乱）。<strong>精神洗礼</strong>（主动）：清除负面状态/重置厄运值。<strong>命运看守者</strong>（被动）：对时间/命运类攻击免疫。</p>
+      <p class="play">扮演法：制造混乱——打乱敌人的"剧本"。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列2</span><span class="seq-name">先知</span><span class="seq-role">远程祝福 · 团队命运核心</span></div>
+      <p><strong>福祸之言</strong>（主动）：30公里内赐福/诅咒。<strong>预言术</strong>（主动）：预知未来数秒关键事件。<strong>承担团队厄运</strong>（主动）：接受团队debuff换巨额幸运。<strong>命运启示</strong>（被动）：关键时刻获得命运提示。</p>
+      <p class="play">扮演法：福祸之言——说出的祝福与诅咒都会成真，必须慎言。</p>
+    </div>
+
+    <div class="seq">
+      <div class="seq-head"><span class="seq-num">序列1</span><span class="seq-name">巨蛇</span><span class="seq-role">时间循环 · 最终形态</span></div>
+      <p><strong>命运循环</strong>（主动）：让目标陷入时间相对静止的循环。<strong>重启</strong>（主动）：用"存档"覆盖现在（洗掉疯狂/厄运值归零）。<strong>循环中承受厄运</strong>（主动）：在循环中承受厄运换重启后的巨额幸运。<strong>命运化身</strong>（被动）：幸运/厄运上限翻倍。</p>
+      <p class="play">扮演法：衔尾之蛇——理解循环的本质，命运无始无终。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>团队定位：概率操控型辅助</h2>
+    <div class="card">
+      <h3>不确定性本身的价值</h3>
+      <p>现有六途径：占卜家（远程控场）、战士（近战物理）、观众（策略+治疗）、学徒（高机动刺客）、歌颂者（辅助输出）、窥秘人（信息探查）。<strong>命运途径：概率操控型辅助</strong>——命运祝福（队友好运buff）/ 厄运诅咒（敌人厄运debuff）/ 命运逆转（团队濒灭时戏剧性翻盘）。其他辅助给"数值增益"（确定的），命运途径给"概率操控"（不确定的）。</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>与原著设定对照（大事不虚）</h2>
+    <table class="skill-table">
+      <tr><th>序列</th><th>原著能力</th><th>游戏化保留</th><th>游戏化调整</th></tr>
+      <tr><td>9 怪物</td><td>灵感/危险预感</td><td>危险预感、灵性视觉</td><td>嫁接命运轨迹线</td></tr>
+      <tr><td>8 机器</td><td>计算力/占卜</td><td>弹道预判、精确打击、占卜</td><td>数值游戏化</td></tr>
+      <tr><td>7 幸运儿</td><td>被动好运</td><td>幸运眷顾、好运积累</td><td>幸运值系统（被动变可控资源）</td></tr>
+      <tr><td>6 灾祸教士</td><td>引灾祸/精神风暴</td><td>引祸上身、精神风暴</td><td>灾祸状态可视化</td></tr>
+      <tr><td>5 赢家</td><td>掌控幸运/给予厄运</td><td>命运操控、厄运诅咒、戏剧性逆转</td><td>承担厄运换幸运（新增玩法）</td></tr>
+      <tr><td>4 厄运法师</td><td>厄运领域/赐福/水银之躯</td><td>全部保留</td><td>领域可视化</td></tr>
+      <tr><td>3 混乱行者</td><td>混乱权柄/精神洗礼</td><td>全部保留</td><td>战术化表达</td></tr>
+      <tr><td>2 先知</td><td>福祸之言/预言术</td><td>全部保留</td><td>承担团队厄运（新增）</td></tr>
+      <tr><td>1 巨蛇</td><td>命运循环/重启</td><td>全部保留</td><td>循环中承受厄运（新增）</td></tr>
+    </table>
+  </div>
+
+  <div class="quote">
+    你信命吗？<br>
+    其他职业靠技术，命运途径靠运气。<br>
+    但命运不是白给的——你节制的每一秒，都在为关键时刻的逆转积蓄力量。<br>
+    平时是"普通人"，关键时刻是"天选之人"。<br>
+    敢不敢赌一把？<br>
+    命运途径，为敢于梭哈的人准备。
+  </div>
+
+  <div class="method">
+    <div class="label">设计说明</div>
+    <p>本文遵循"大事不虚、小事不拘"——序列名、能力本质忠于原著（怪物→机器→幸运儿→灾祸教士→赢家→厄运法师→混乱行者→先知→巨蛇），技能机制与数值为游戏体验服务。参考游戏组对占卜家途径的改编逻辑：每个序列3-6个具体技能、允许超前嫁接核心能力、每个序列有明确战斗定位变化。</p>
+  </div>
+</div>
+</body>
+</html>
