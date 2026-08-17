@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>温馨日历 · 个人任务PWA | 张建鹏作品集</title>
+<style>
+:root {
+  --bg: #FAF7F2; --ink: #1F1B16; --ink-soft: #5F5648; --ink-faint: #8A7F6F;
+  --line: #E7E0D5; --accent: #C4704F; --gold: #A68A64; --card: #FFFFFF;
+  --radius: 16px;
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.75; font-size:15px; -webkit-font-smoothing:antialiased; }
+.back { display:inline-block; margin:28px 24px 0; padding:8px 18px; border:1px solid var(--line); border-radius:999px; color:var(--ink-soft); text-decoration:none; font-size:13px; transition:all .2s; }
+.back:hover { border-color:var(--accent); color:var(--accent); }
+.wrap { max-width:960px; margin:0 auto; padding:36px 24px 80px; }
+h1 { font-size:34px; font-weight:300; letter-spacing:.04em; }
+.sub { color:var(--ink-soft); margin-top:10px; font-size:15px; max-width:660px; }
+.badges { margin-top:18px; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.badge { padding:5px 14px; border-radius:999px; background:rgba(196,112,79,.1); color:var(--accent); font-size:12px; }
+.badge.gold { background:rgba(166,138,100,.14); color:var(--gold); }
+.link-btn { padding:7px 18px; border-radius:999px; background:var(--ink); color:var(--bg); text-decoration:none; font-size:13px; transition:all .2s; }
+.link-btn:hover { opacity:.85; transform:translateY(-1px); }
+.gallery { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:28px; }
+@media (max-width:700px){ .gallery{grid-template-columns:1fr;} }
+.imgbox { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:12px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.imgbox img { width:100%; border-radius:8px; display:block; }
+.imgbox .cap { font-size:12px; color:var(--ink-faint); margin-top:8px; text-align:center; }
+.cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:32px; }
+@media (max-width:700px){ .cards{grid-template-columns:1fr;} }
+.card { background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px; box-shadow:0 2px 8px rgba(31,27,22,.05); }
+.card h3 { font-size:16px; font-weight:500; margin-bottom:8px; }
+.card p { font-size:13.5px; color:var(--ink-soft); }
+.card .tag { display:inline-block; margin-top:10px; font-size:11px; color:var(--accent); font-weight:600; letter-spacing:.06em; }
+.method { background:linear-gradient(90deg, rgba(196,112,79,.07), transparent 80%); border-left:3px solid var(--accent); border-radius:0 var(--radius) var(--radius) 0; padding:24px 28px; margin-top:40px; }
+.method .label { font-size:12px; color:var(--accent); font-weight:600; letter-spacing:.1em; margin-bottom:8px; }
+.method p { font-size:14.5px; color:var(--ink); }
+</style>
+</head>
+<body>
+<a class="back" href="./">← 返回作品集</a>
+<div class="wrap">
+  <h1>温馨日历 · 个人任务PWA</h1>
+  <p class="sub">日/月/年三层任务规划PWA，6套主题、三级庆祝特效、鼓励语池。从 v1.0 到 v1.3.2 共11次迭代提交，最后改名"一小步"——让每一天的进步都被看见。</p>
+  <div class="badges">
+    <span class="badge">React 18 · TypeScript · Vite</span>
+    <span class="badge">shadcn/ui · Dexie.js</span>
+    <span class="badge gold">PWA · 离线可用</span>
+    <a class="link-btn" href="https://zhangjianpeng66.github.io/warm-calendar/" target="_blank" rel="noopener">在线体验 →</a>
+  </div>
+
+  <div class="gallery">
+    <div class="imgbox"><img src="温暖日历 (1).jpg" alt="温暖日历截图1"><div class="cap">日计划视图</div></div>
+    <div class="imgbox"><img src="温暖日历 (2).jpg" alt="温暖日历截图2"><div class="cap">庆祝特效</div></div>
+    <div class="imgbox"><img src="温暖日历 (3).jpg" alt="温暖日历截图3"><div class="cap">主题切换</div></div>
+    <div class="imgbox"><img src="温暖日历 (4).jpg" alt="温暖日历截图4"><div class="cap">任务管理</div></div>
+    <div class="imgbox"><img src="温暖日历 (5).jpg" alt="温暖日历截图5"><div class="cap">月计划</div></div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <span class="tag">迭代记录</span>
+      <h3>11次提交的完整迭代链</h3>
+      <p>v1.0（6/13）→ v1.1 可爱卡通风 → v1.2 修复庆祝重复触发 → v1.3 改名"一小步"、6主题增强 → v1.3.2 清除缓存按钮+PWA强制更新。</p>
+    </div>
+    <div class="card">
+      <span class="tag">产品细节</span>
+      <h3>庆祝特效系统</h3>
+      <p>日/月/年三级 confetti 特效 + 鼓励语池——完成任务的即时反馈感，是我对"让坚持变轻松"这个需求的理解。</p>
+    </div>
+  </div>
+
+  <div class="method">
+    <div class="label">我当时为什么做这个</div>
+    <p>我真的管不好时间——这个工具先解决我自己的问题。它让我确信：好的产品来自真实的自我需求，把"我想要"变成"我做到了"，就是最好的产品练习。</p>
+  </div>
+</div>
+</body>
+</html>
