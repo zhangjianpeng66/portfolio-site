@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>张建鹏 · 让AI有温度，让审美有技术</title>
+<style>
+/* ============ 设计令牌 ============ */
+:root {
+  --bg: #FAF7F2;
+  --ink: #1F1B16;
+  --ink-soft: #5F5648;
+  --ink-faint: #8A7F6F;
+  --line: #E7E0D5;
+  --accent: #C4704F;
+  --accent-deep: #A85A3C;
+  --gold: #A68A64;
+  --card: #FFFFFF;
+  --radius: 16px;
+  --shadow-sm: 0 2px 8px rgba(31,27,22,0.05);
+  --shadow-md: 0 6px 20px rgba(31,27,22,0.08);
+  --shadow-lg: 0 12px 32px rgba(31,27,22,0.12);
+  --font: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --serif: "Songti SC", "SimSun", serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.75;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============ 首屏 ============ */
+.hero {
+  min-height: 86vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 80px;
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(196,112,79,0.06), transparent 70%),
+    var(--bg);
+}
+.hero h1 {
+  font-size: clamp(36px, 6.5vw, 60px);
+  font-weight: 200;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+}
+.hero h1 .warm { color: var(--accent); font-weight: 300; }
+.hero .sub {
+  margin-top: 20px;
+  font-size: 16px;
+  color: var(--ink-soft);
+  letter-spacing: 0.03em;
+}
+.hero .tags {
+  margin-top: 34px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.hero .tag {
+  padding: 7px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.hero .tag:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--gold);
+}
+
+/* ============ 立体导航（5个形状） ============ */
+.shape-nav {
+  max-width: 1080px;
+  margin: -40px auto 0;
+  padding: 0 24px;
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+.shape {
+  position: relative;
+  background: linear-gradient(145deg, #FFFFFF, #F2EDE4);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 26px 18px 22px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow:
+    0 2px 4px rgba(31,27,22,0.04),
+    0 8px 16px rgba(31,27,22,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1.1), box-shadow 0.3s;
+}
+.shape:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow:
+    0 4px 8px rgba(31,27,22,0.06),
+    0 20px 40px rgba(31,27,22,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.95);
+}
+.shape:active { transform: translateY(-2px) scale(0.99); }
+.shape .shape-num {
+  position: absolute;
+  top: 12px; left: 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+.shape .shape-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+.shape h3 {
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.shape p {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+/* ============ 内容区 ============ */
+main {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 72px 24px 100px;
+}
+.story-section { scroll-margin-top: 24px; }
+.story-head { margin-bottom: 40px; }
+.story-head .kicker {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin-bottom: 10px;
+}
+.story-head h2 {
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 300;
+  letter-spacing: 0.04em;
+}
+.story-head .desc {
+  color: var(--ink-soft);
+  font-size: 15px;
+  max-width: 640px;
+  margin-top: 12px;
+}
+
+/* 卡片 */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+  border: 1px solid rgba(231,224,213,0.6);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+.card .kicker {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+}
+.card h3 { font-size: 18px; font-weight: 500; margin-bottom: 10px; }
+.card p { color: var(--ink-soft); font-size: 14px; }
+.card .meta {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+@media (max-width: 900px) {
+  .shape-nav { grid-template-columns: repeat(3, 1fr); }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .shape-nav { grid-template-columns: 1fr 1fr; }
+}
+
+/* 时间线 */
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 4px; bottom: 4px;
+  width: 2px;
+  background: linear-gradient(var(--accent), var(--gold));
+  opacity: 0.35;
+  border-radius: 2px;
+}
+.tl-item { position: relative; margin-bottom: 30px; }
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: -29px; top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(196,112,79,0.15);
+}
+.tl-item .tl-date {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.tl-item h4 { font-size: 16px; font-weight: 500; margin: 4px 0 6px; }
+.tl-item p { color: var(--ink-soft); font-size: 14px; }
+
+/* 流水线 */
+.flow { display: flex; flex-wrap: wrap; align-items: stretch; margin: 28px 0; }
+.flow-step {
+  flex: 1;
+  min-width: 140px;
+  background: linear-gradient(160deg, #FFFFFF, #F6F1E8);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 14px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.flow-step:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.flow-step .num {
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+.flow-step .label { font-size: 14px; font-weight: 500; margin-top: 5px; }
+.flow-step .detail { font-size: 12px; color: var(--ink-faint); margin-top: 5px; line-height: 1.55; }
+.flow-arrow { display: flex; align-items: center; padding: 0 4px; color: var(--gold); font-size: 18px; }
+
+/* 为什么 */
+.why {
+  margin-top: 48px;
+  padding: 30px 32px;
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(90deg, rgba(196,112,79,0.07), transparent 80%);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.why .why-label {
+  font-size: 12px;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+}
+.why p {
+  font-size: 15.5px;
+  color: var(--ink);
+  font-family: var(--serif);
+  line-height: 2;
+}
+
+/* 项目卡片 */
+.project-card { display: flex; flex-direction: column; }
+.project-card .status {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+.status-live { background: rgba(166,138,100,0.14); color: var(--gold); }
+.status-local { background: rgba(196,112,79,0.1); color: var(--accent-deep); }
+.project-card .tech {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 12px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+}
+
+/* 洞察 */
+.insight { margin-bottom: 20px; }
+.insight .pattern {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.insight p { color: var(--ink-soft); font-size: 14px; }
+
+/* 页脚 */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 44px 24px 56px;
+  text-align: center;
+}
+footer .contact {
+  font-size: 13px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+
+/* 滚动回顶部 */
+.to-top {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  box-shadow: var(--shadow-lg);
+  z-index: 100;
+}
+.to-top.show { opacity: 0.9; }
+.to-top:hover { transform: translateY(-3px); opacity: 1; }
+</style>
+</head>
+<body>
+
+<!-- ============ 首屏 ============ -->
+<section class="hero">
+  <h1>让AI有温度<br><span class="warm">让审美有技术</span></h1>
+  <p class="sub">张建鹏 · 汉语言文学 · 2027届 · 武汉</p>
+  <div class="tags">
+    <span class="tag">AI 应用</span>
+    <span class="tag">内容创作</span>
+    <span class="tag">用户洞察</span>
+    <span class="tag">产品思维</span>
+    <span class="tag">数据敏感</span>
+  </div>
+</section>
+
+<!-- ============ 立体导航 ============ -->
+<nav class="shape-nav">
+  <div class="shape" data-target="story1">
+    <span class="shape-num">01</span>
+    <span class="shape-icon">🌱</span>
+    <h3>成长历程</h3>
+    <p>约60天，把AI从工具变成同事</p>
+  </div>
+  <div class="shape" data-target="story2">
+    <span class="shape-num">02</span>
+    <span class="shape-icon">🚀</span>
+    <h3>三个项目</h3>
+    <p>从0到1完整落地的实践</p>
+  </div>
+  <div class="shape" data-target="story3">
+    <span class="shape-num">03</span>
+    <span class="shape-icon">📜</span>
+    <h3>72集剧本</h3>
+    <p>从练习到成品的完整旅程</p>
+  </div>
+  <div class="shape" data-target="story4">
+    <span class="shape-num">04</span>
+    <span class="shape-icon">📊</span>
+    <h3>数据敏感</h3>
+    <p>从数据里找规律，把规律变成方法</p>
+  </div>
+  <div class="shape" data-target="story5">
+    <span class="shape-num">05</span>
+    <span class="shape-icon">🗺️</span>
+    <h3>经历时间线</h3>
+    <p>一路走过来的积累</p>
+  </div>
+</nav>
+
+<main>
+
+<!-- ============ 故事1：成长历程 ============ -->
+<section class="story-section" id="story1">
+  <div class="story-head">
+    <div class="kicker">STORY 01</div>
+    <h2>约60天，我把AI从“工具”变成了“同事”</h2>
+    <p class="desc">2026年6月到8月，我在工作之余系统研究了如何让AI准确理解需求、高质量交付、可验证成果——并把这些实践沉淀成了可复用的方法论。</p>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:48px;">
+    <div class="card">
+      <div class="kicker">复合能力 · 内容 × AI</div>
+      <h3>内容感知 × 技术落地</h3>
+      <p>汉语言文学的专业功底让我懂内容、懂叙事、懂审美；系统实践让我能把想法用AI工具落地成作品——从72集剧本到自动化工具体系，两条腿走路。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">复合能力 · 用户 × 数据</div>
+      <h3>用户同理心 × 数据判断</h3>
+      <p>我习惯先思考“用户或者我到底需要什么”，再用数据验证判断——四国用户画像、发布时机规律、渠道运营策略，都是“用户视角出发、数据驱动决策”的实践。</p>
+    </div>
+    <div class="card">
+      <div class="kicker">复合能力 · 执行 × 沉淀</div>
+      <h3>把事情做完 × 把方法留下</h3>
+      <p>不仅交付结果，还沉淀方法论——标书工作流、Prompt总库、质量评估体系，让个人经验变成团队可复用的资产，这是我对“效率与责任”的理解。</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">6月上旬 · 起点</div>
+      <h4>开始系统使用AI工具</h4>
+      <p>在日常学习和实习工作中引入AI辅助，从内容生产场景切入，边用边总结。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">6月下旬 · 建立验收意识</div>
+      <h4>对AI输出建立核验机制</h4>
+      <p>在剧本拆解和报告分析中，对AI生成内容进行真实性核验，识别并纠正编造信息，建立“先核验再使用”的习惯。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">7月上旬 · 需求结构化</div>
+      <h4>需求表达从口语化走向结构化</h4>
+      <p>在标书、地图、剧本等项目里，逐步形成“目标+边界+验收标准”的完整需求结构，一次沟通即可开工。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">7月中旬 · 验证意识</div>
+      <h4>建立多源验证机制</h4>
+      <p>关键信息通过多语言检索、权威来源交叉验证（如用俄语源验证俄语区数据），确保结论可信。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">7月下旬 · 方法论觉醒</div>
+      <h4>从“用AI”到“教AI”到“给AI定规则”</h4>
+      <p>在标书工作中总结出“依据采购文件提取关键信息、生成替换检查表”的专业流程；同时建立AI角色边界、质量标准的完整规则体系。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">8月 · 体系沉淀</div>
+      <h4>沉淀为可复用资产</h4>
+      <p>输出：Prompt模板总库（八大类）、AI生成故事质量评估体系v2、标书生产工作流、Agent操作手册——个人经验体系化。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>这些研究发生在我真正想做的事上——我喜欢AI把我的想法快速落地的感觉，那种及时反馈感非常强大，同时它也真的帮我解决了实际问题。把工具用透、把方法沉淀，让更多人能用上这份效率，是我对这份热爱的回应，也是我对团队的责任。</p>
+  </div>
+</section>
+
+<!-- ============ 故事2：三个项目 ============ -->
+<section class="story-section" id="story2">
+  <div class="story-head">
+    <div class="kicker">STORY 02</div>
+    <h2>三个从0到1完整落地的项目</h2>
+    <p class="desc">我不缺想法，缺的是“做完了”——这三个是少数从0到1完整落地、至今仍在运行的项目。</p>
+  </div>
+
+  <div class="grid-3">
+    <a class="card project-card" href="http://114.55.115.117:8081/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;">
+      <span class="status status-live">线上运行中 · 点击查看</span>
+      <div class="kicker">项目一</div>
+      <h3>求职雷达 · 个人岗位监控</h3>
+      <p>为精准掌握目标岗位动态，独立开发岗位监控系统：爬取12+家头部公司公开职位信息，建立岗位画像过滤器与标签体系，实现“只关注与求职方向匹配的岗位”。后基于个人求职需求升级为多Agent推荐系统——数据Agent（查库抗幻觉）+ 推理Agent（按用户画像分档推荐）+ 安全层（幻觉校验），实现“只给用户看该看的岗位”。因含个人画像数据，暂不公开演示。</p>
+      <div class="meta">2273条岗位 · 12+家公司 · 自动过滤+标签 · 多Agent推荐升级</div>
+      <div class="tech">Next.js · Playwright · DeepSeek API · 服务器部署</div>
+    </a>
+    <a class="card project-card" href="hermes/" style="text-decoration:none;color:inherit;display:flex;">
+      <span class="status status-live">线上运行中 · 点击查看</span>
+      <div class="kicker">项目二</div>
+      <h3>Hermes · 个人AI助手</h3>
+      <p>日常灵感很多，但总缺一个“了解我的人”来讨论——于是我设定人格与记忆系统，搭建个人AI助手，用它整理灵感、沉淀工作日志，让每次对话都基于完整的“我”。</p>
+      <div class="meta">2G内存 · 企业微信 · 人格+记忆系统 · 每日陪伴</div>
+      <div class="tech">Hermes Agent · DeepSeek API · systemd · Bash</div>
+    </a>
+    <a class="card project-card" href="calendar/" style="text-decoration:none;color:inherit;display:flex;">
+      <span class="status status-local">可在线体验 · 点击查看</span>
+      <div class="kicker">项目三</div>
+      <h3>温馨日历 · 个人任务PWA</h3>
+      <p>为管理个人任务规划，开发日/月/年三层任务管理PWA，设计6套主题与三级庆祝特效系统，11次迭代提交打磨至稳定版本。</p>
+      <div class="meta">11次提交 · 6主题 · 庆祝特效系统</div>
+      <div class="tech">React 18 · TypeScript · Vite · shadcn/ui · Dexie.js</div>
+    </a>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>三个项目的共同起点，都是真实的工作与生活痛点。我习惯先自己动手解决问题，再把它沉淀成可复用的工具——解决问题的过程本身，就是最好的学习。</p>
+  </div>
+</section>
+
+<!-- ============ 故事3：72集剧本 ============ -->
+<section class="story-section" id="story3">
+  <div class="story-head">
+    <div class="kicker">STORY 03</div>
+    <h2>从三个小故事到72集剧本</h2>
+    <p class="desc">一次完整的创作旅程：从练手到发现短板，从补课到迭代重构，最终形成一部历史考据扎实的72集红色题材短剧。</p>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step"><div class="num">01</div><div class="label">练手</div><div class="detail">以小故事打磨叙事基本功</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">02</div><div class="label">发现短板</div><div class="detail">史实/逻辑/伏笔/主题的系统性缺口</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">03</div><div class="label">史料补课</div><div class="detail">专著+40余篇学术论文系统研究</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">04</div><div class="label">迭代重构</div><div class="detail">删反派/立线索/补人物/埋伏笔</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">05</div><div class="label">差异化定位</div><div class="detail">迁移红25军·契合本土文化战略</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">06</div><div class="label">成品</div><div class="detail">72集三幕完整结构</div></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:36px;">
+    <div class="card">
+      <div class="kicker">关键决策</div>
+      <h3>删掉反派：困境来自时代本身</h3>
+      <p>初版的反派角色在历史背景下显得刻意——1934年的困境（饥饿/炮火/任务）本身已是绝境。重构时删除反派，让冲突来自岗位规则与历史真实，反而更可信。</p>
+      <div class="meta">以扁担为贯穿线索 · 人物小传补全 · 伏笔体系化</div>
+    </div>
+    <div class="card">
+      <div class="kicker">差异化定位</div>
+      <h3>从中央红军迁移到红25军</h3>
+      <p>基于公司湖北本土定位与政策扶持方向，将故事迁移至从湖北大别山出发的红25军——平均年龄不足18岁的“娃娃军”，天然契合“少年成长”主题，且更具差异化。</p>
+      <div class="meta">历史考据：独树镇246名娃娃兵 · 陈廷贤“军史布衣第一人”</div>
+    </div>
+  </div>
+
+  <a class="card" href="script/" style="margin-top:20px;text-decoration:none;color:inherit;display:block;">
+    <div class="kicker">查看剧本 · 点击进入</div>
+    <h3>面向三类人群验证内容宽度</h3>
+    <p>将故事分享给不同年龄段的受众群体测试反馈，验证“普通观众满足于情绪爽感、高审美观众享受伏笔智趣”的双层内容结构——既保市场宽度，也保内容深度。</p>
+  </a>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>这次创作让我确信：好的内容不止是灵感产物，也是方法论的产物。从史料研究到结构设计再到市场验证，每一步都有方法可循——这也成为我后来内容工作的底层逻辑。</p>
+  </div>
+</section>
+
+<!-- ============ 故事4：数据敏感 ============ -->
+<section class="story-section" id="story4">
+  <div class="story-head">
+    <div class="kicker">STORY 04</div>
+    <h2>我习惯从数据里找规律</h2>
+    <p class="desc">我的工作方式有一条主线：先有大量真实数据，再追问“为什么”，最后把规律沉淀成可复用的方法。</p>
+  </div>
+
+  <a class="card" href="analysis/" style="margin-bottom:32px;text-decoration:none;color:inherit;display:block;">
+    <div class="kicker">查看分析图表 · 点击进入</div>
+    <h3>大量数据 → 追问规律 → 沉淀方法</h3>
+    <p style="margin-top:8px;">这个模式贯穿了我所有的工作场景——用户研究、内容创作、流程优化、运营决策。</p>
+  </a>
+
+  <div class="insight card">
+    <div class="pattern">案例一 · 四国用户画像（异常值警觉）</div>
+    <p>分析孟加拉用户数据时，发现性别“其他”占比达20.5%——追问后发现是小样本（83）导致的统计偏差。这种对异常值的警觉，避免了一次错误结论。同一项目里，拆解72集短剧提炼出“剧情分配结构+每集结尾钩子+开场矛盾”的生产规律，沉淀为拆剧方法论。</p>
+    <div class="meta">Google Trends · Yandex Wordstat · 16张可视化 · 200+关键词标注</div>
+  </div>
+
+  <div class="insight card">
+    <div class="pattern">案例二 · 标书6城20+包（流程本质）</div>
+    <p>完成多城市标书后，总结出“标书生产=格式适配+参数替换”的本质，建立五步工作流：模板格式学习→通用模块拆分→关键信息提取→替换检查表→快速校验上传，单日产出从1份提升至7份。</p>
+    <div class="meta">依据采购文件提取对象/编号/采购人等关键信息 · 生成快速替换检查表</div>
+  </div>
+
+  <div class="insight card">
+    <div class="pattern">案例三 · 校园媒体运营（发布时机）</div>
+    <p>在校园媒体运营中总结出发布时机的规律：重大活动稿件抢占首发（首个发布者获得流量优势），常规内容选择就餐等碎片时间发布（流量更佳）。基于此建立发布排期机制，快讯时效从6小时压缩至2小时，单篇最高阅读量2.3万+。</p>
+    <div class="meta">发布排期机制 · 时效6h→2h · 单篇2.3万+</div>
+  </div>
+
+  <div class="insight card">
+    <div class="pattern">案例四 · 校园渠道（用户运营）</div>
+    <p>作为校园渠道负责人，通过新生内容（《新生指南》）建立信任，配合社群维护与节点运营（高考查分热点内容），实现流量获取与转化：小红书单条万赞/10万+播放，抖音半月500+粉丝，微信沉淀1000+用户，累计营收约6500元。</p>
+    <div class="meta">内容建立信任 · 社群维护 · 节点热点运营</div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这个</div>
+    <p>我深受马克思主义和毛泽东思想的影响，坚持“没有调查就没有发言权”——先有数据再说话，先问为什么再下结论。这个习惯贯穿了我所有的决策。</p>
+  </div>
+</section>
+
+<!-- ============ 故事5：经历时间线 ============ -->
+<section class="story-section" id="story5">
+  <div class="story-head">
+    <div class="kicker">STORY 05</div>
+    <h2>一路走过来的积累</h2>
+    <p class="desc">从校园到职场，每一段经历都在塑造现在的能力结构。</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">2023.10 - 2025.07</div>
+      <h4>学工在线 · 采编部部长</h4>
+      <p>主管校园融媒体采编，个人发表原创图文30余篇，建立选题排期与三级审稿机制，设计“采编星级制”激励体系。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023.12 - 2024.10</div>
+      <h4>仟一之家 · 中南民大校园负责人</h4>
+      <p>独立制作万字《新生指南》，挖掘隐性信息解决新生真实需求；通过内容运营与社群维护实现用户增长与转化。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2024.01 - 2024.02</div>
+      <h4>利川市税务局 · 行政实习生</h4>
+      <p>运用AI工具辅助政策文件结构化梳理，独立完成《利川市土地闲置处理办法》项目书，熟悉政府办文流程。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2025.01 - 2025.02</div>
+      <h4>川西红色文化调研 · 团队负责人</h4>
+      <p>带队7人赴四川甘孜调研，报告在东方网/四川旅游网发表，获校级“社会实践先进个人+优秀团队+挑战杯三等奖”。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2023.10 - 2025.07</div>
+      <h4>团委 · 创实部部长</h4>
+      <p>主导20+次比赛答辩组织，独立负责会场布置与资料统筹，获“优秀共青团干部”。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026.06 - 至今</div>
+      <h4>淘师湾 · 产品项目助理</h4>
+      <p>建立标书生产方法论，单日产出1→7份，独立完成6城20+项目包全套方案与投标闭环，已中标2个项目。</p>
+    </div>
+    <div class="tl-item">
+      <div class="tl-date">2026.07 - 至今</div>
+      <h4>晟智创育 · AI策略与内容运营</h4>
+      <p>主导Prompt工程体系与AI策略设计，完成四国用户画像与72集剧本创作，沉淀方法论资产。</p>
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-label">我当时为什么做这些</div>
+    <p>回顾这些经历，我总在热爱我的团队，我希望大家都能变得更好——把没人要求做的事做完、做好、沉淀成方法。敢于承担每一份责任，是我积累能力的方式，也是我对生活的态度。</p>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="contact">张建鹏 · 156-2388-0798 · 230016968@qq.com · 中南民族大学 汉语言文学 2027届</div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="回到顶部">↑</button>
+
+<script>
+// 立体导航点击跳转
+document.querySelectorAll('.shape').forEach(shape => {
+  shape.addEventListener('click', () => {
+    const target = document.getElementById(shape.dataset.target);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// 回到顶部按钮
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  toTop.classList.toggle('show', window.scrollY > 400);
+});
+toTop.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+
+</body>
+</html>
